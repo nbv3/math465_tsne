@@ -1,0 +1,8 @@
+
+To drive home the point about how the gradient of t-SNE helps alleviate the crowding problem, take a look the representations of the gradient for a pair of points for both the SNE alg and t-SNE. Note that red indicates a strong atractive force.
+
+In the left, you see that SNE still emphasizes that similar points in high d should be modeled closely in low d. Thats why the attractive force in red is strongest when close points are modeled far away. However, also note that the scale is floored by 0. That means that for many points that are distorted but were never close in high dimensions, there is a slight attractive force, resulting in the crowding problem. 
+
+Now take a look at the right. You still have that same attractive force for mis-modeled points. However, for points that were moderately far away in high dimensions and modeled slightly incorrectly in low dimensions, the force is roughly 0, ie. theres no reason for these points to overcome the slight distortion. Furthermore, the force is actually slightly repulsive for far away points being modeled in low dimensions as being close, also helping to alleviate the crowding problem. 
+
+One negative side affect of this is that the attractive force now weakens as points are initially embedded far away, as you can see in the tapering of the red as the low dimensional distance grows. Hoever, since the initial embedding is usually a tight cluster, this is likely to have little effect.

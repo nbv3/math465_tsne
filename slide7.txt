@@ -1,0 +1,20 @@
+
+So at this point, we have both an intuition and a way to measure what it means to be close/similar/like another point in both our high dimensional space and our embedding dimension.
+
+Now, we study how to use these definitions to our advantage to ensure an embedding that preserves as much of the structure of the high dimensional set as possible. 
+
+In an ideal world, we would like every single similarity value between two points in the high dimension to be equal to the their similarity value in the low dimension. A perfect embedding with no mismatch would imply that the dataset that you began with was not actually high dimensional. However, most high dimensional data cannot perfectly represented in low dimensions.
+
+So now we have the task of minimizing the distortions or errors of our embedding.
+
+Let's call the total cost of our embedding to be the sum of errors of each individual point embedding. We calculate this cost using the Kullback-Leibler divergence.
+
+What it does is sum over all points the product of a pair's similarity in high D and the log of that similarity divided by the similarity of the same pair in low dimensions. Intuitively this makes sense, the log gives us a value of zero of pij that is equal to qij. However, the choice of a log instead of a difference is important. What this does is penalize greatly the embedding of a point that was very close in high dimensions is modeled as far away in low dimensions, while it imposes a fairly small penalty a dissimilar pair of points being modeled closely in low dimensions. As you can see, as p grows and q drops, this cost increases exponentially. By doing this, t-SNE biases the mapping to favor preserving the local structure in high dimensions.
+
+So now that we have a working definition of a "good or poor mapping". We know need to wiggle the points in the embedding dimension to optimize the mapping and reduce the cost to a minimum. We achieve this by gradient descent.
+
+As a full explanation of gradient descent is outside of our time limits, I'll use an analogy to describe how the method works. Imagine a ball that is held still on the side of a hill. When released, the system naturally tends to a state of lower energy, ie. have the ball roll down the hill. But how does the ball know in which direction to roll? It goes in the direction that gets it to the bottom of the hill fastest. In our mapped space, the gradient gives us the direction and energy with which that some point y_i should take with respect to its neighbors to minimize the cost associate with that point.
+
+In the equation, it sums over all points the difference in their similarities and points that force in the composite direction. Essentially, this is a resultant sum of vectors.
+
+Note that their's a dampening term in the denominator. This will be explained in more detail later but just know that this term disincentivizes points from crowding cluster of which they are not a part.

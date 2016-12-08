@@ -1,0 +1,21 @@
+
+this notion of "similarity" between data points is the crux of t-SNE. Let's consider our original data in R^D.
+
+Suppose we have some point x_i. We're interested in measuring the "neighborliness" between the point x_i and any other point in the data set, x_j. 
+
+Intuitively, we want points that are far away from each other to be considered dissimilar, while points that are close are more similar.
+
+t-SNE takes this basic distance-based metric a step further - we want points to be considered "similar" if they are close together, but also if they exist within the same local "neighborhood", or cluster 
+
+Let's model the distance from point x_i as a density distribution centered about the point x_i (in this case, a Gaussian). 
+
+This distribution gives us a way of translating a distance between points into a quantity that functions similarly to a probability - in this case, we have an exponential decrease in likelihood as distance between points increases. From the Gaussian distribution, we can see how t-SNE emphasizes nearby points, since the dropoff of the Gaussian is exponential.
+
+Just to be clear, the use of the phrase "probability" doesn't imply some random process - it's more a convenient way to think about some scale-invariant notion of the distance between points
+
+In order to scale this Gaussian likelihood, we divide the similarity of x_i and x_j with respect to the sum of similarity values between x_i and all other points in the dataset. This, in effect, weights the similarity of x_i and x_j by considering how x_i relates to the dataset as a whole.
+
+With this definition, we'll have two conflicting similarity measures - one from x_i to x_j, with a Gaussian centered at x_i, and another from x_j to x_i, where the Gaussian is centered at x_j. In order to speed up the algorithm and simplify the similarities, we symmetrize these two quantities.
+
+
+These two Gaussians are entirely different distributions, which depend on the choice of sigma_i and sigma_j for the points x_i and x_j. Now that we've defined this notion of a distribution about a point, we need to measure the standard deviation sigma

@@ -1,0 +1,9 @@
+
+We also need to define the similarity of points in the embedding space, R^d. Again, this is some quantity that measures the "neighborliness" of two points x_i and x_j in the space R^d.
+
+In standard SNE, we use the same definition as in the original space (that is, a Gaussian likelihood over a sum of Gaussian likelihoods). However, in t-SNE, we use a different distribution, the "student-t" distribution with a single degree of freedom, defined with the following equation.
+
+NOTE
+(In the original SNE paper, we choose a fixed sigma for all points in R^d. In t-SNE, we don't have to make that assumption, since the student-t distribution doesn't depend on sigma. This makes intuitive sense, since we don't know where the points in the lower dimensional space will eventually end up, so we shouldn't assume anything about their distributions)
+
+This choice of student-t distribution is the key differentiator between SNE and t-SNE - for now, just keep in mind that the choice of distribution makes our definition of "similarity"  different between the original space and the embedding space.
